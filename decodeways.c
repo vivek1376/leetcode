@@ -9,35 +9,37 @@
 int numDecodings(char* s) {
     int i, num, w1, w2, len, *ways;
 
-    char letterString[2] = "";
-    
     len = strlen(s);
-        
+
+    /* store no. of total ways for string s[i] in ways[i],
+       ways[0] will be final solution */
     ways = (int *)malloc(len * sizeof(int));
 
     ways[len - 1] = (s[len - 1] == '0' ? 0 : 1);
-    
+
     for (i = len - 2; i >= 0; i--) {
 	if (s[i] == '0') {
+	    /* vaild string can't start with '0' */
 	    ways[i] = 0;
-	} else {
-	    w1 = ways[i+1];
-
-	    letterString[0] = s[i];
-	    letterString[1] = s[i+1];
-
-	    num = atoi(letterString);
-	    if (num <= 26) {
-		if ((i + 2) >= len)
-		    w2 = 1;
-		else
-		    w2 = ways[i+2];
-	    } else {
-		w2 = 0;
-	    }
-
-	    ways[i] = w1 + w2;
+	    continue;
 	}
+
+	/* if decoding current character individually */
+	w1 = ways[i+1];
+
+	/* if grouping current character with next character,
+	   it shouldn't be greater than '26' */
+
+	/* convert to int */
+	num = (s[i] - 48) * 10 + (s[i+1] - 48);
+
+	if (num > 26) {
+	    w2 = 0;
+	} else {
+	    w2 = (i + 2) >= len ? 1 : ways[i+2];
+	}
+
+	ways[i] = w1 + w2;
     }
 
     return ways[0];
