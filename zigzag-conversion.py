@@ -14,12 +14,8 @@ class Solution:
 
         sLen = len(s)
 
-        if numRows > 1:
-        	totalCols = math.ceil((sLen / (2*(numRows-1))) * (numRows-1))
-        else:
-        	totalCols = sLen
 
-        arr = [[0 for j in range(totalCols)] for i in range(numRows)]
+        arr2 = ['' for i in range(numRows)]
 
         #print(arr)
 
@@ -34,7 +30,8 @@ class Solution:
         		if si >= sLen:
         			break
 
-        		arr[i][j] = s[si]
+        		arr2[i] += s[si]
+
         		si += 1
 
         	i1 = i # reset?
@@ -48,7 +45,8 @@ class Solution:
         			break
 
         		j += 1
-        		arr[i][j] = s[si]
+        		arr2[i] += s[si]
+
         		si += 1
 
         	i = 0
@@ -57,13 +55,13 @@ class Solution:
         	#print(arr)
 
         #print(arr)
-        st =""
-        for m in range(0, numRows):
-        	for n in range(0, totalCols):
-        		if arr[m][n] != 0:
-        			st = st + arr[m][n]
 
-        return st
+        st2 = ""
+
+        for i in range(numRows):
+        	st2 += arr2[i]
+        
+        return st2
 
 
 
