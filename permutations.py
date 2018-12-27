@@ -1,32 +1,25 @@
 #!/usr/bin/env python3
 
 class Solution:
+
     def __init__(self):
         self.permutations = []
-    
-    def func2(self, list1, list2):
 
-        if not list1:
-            self.permutations.append(list2)
+        
+    def func2(self, availableNumList, permuteString):
+        if not availableNumList:
+            self.permutations.append(permuteString)
             return
 
-        newList1 = newList2 = []
-        for val in list1:
-            #print("for:")
-            #print("newlist1: " + str(newList1))
-            #print("newList2: " + str(newList2))
+        
+        for i in range(len(availableNumList)):
+            newAvailableNumList = availableNumList[:]
+            del newAvailableNumList[i]
             
-            newList1 = list1[:]
-            newList1.remove(val)
+            newPermuteString = permuteString[:]
+            newPermuteString.append(availableNumList[i])
             
-            newList2 = list2[:]
-            newList2.append(val)
-            
-            self.func2(newList1, newList2)
-
-            # backtrack
-            
-
+            self.func2(newAvailableNumList, newPermuteString)
             
             
     def permute(self, nums):
