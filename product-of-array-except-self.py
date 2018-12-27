@@ -9,15 +9,10 @@ class Solution:
         """
         nums2 = nums[::-1]
 
-        #print(nums)
-        #print(nums2)
         temp_nums = temp_nums2 = 1
-        for i in range(len(nums)):
-            nums[i] = (temp_nums * nums[i])
-            temp_nums = nums[i]
-            
-            nums2[i] = (temp_nums2 * nums2[i])
-            temp_nums2 = nums2[i]
+        for i in range(1, len(nums)):
+            nums[i] *= nums[i - 1]
+            nums2[i] *= nums2[i - 1]
 
 
         nums2 = nums2[::-1]
