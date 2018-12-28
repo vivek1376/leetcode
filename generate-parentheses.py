@@ -1,55 +1,42 @@
 #!/usr/bin/env python3
 
+# TODO : make iterative
 
 class Solution:
     def __init__(self):
-        self.ans = []
+        self.parenStrList = []
         self.n = 0
 
-    def makeParenStr(self, l):
-        str = ""
-        for i in range(len(l)):
-            if i % 2 == 0:
-                str += ('(' * l[i])
-            else:
-                str += (')' * l[i])
-
-        return str
-
-    def func(self, valList, n_new):
+    def func(self, parenStr, numOpen, numClose):
         #print("func: " + str(n_old))
-        sum = 0
-        sum2 = 0
-        #print(valList)
-        if len(valList) % 2 == 0:
-            odd = 0
-            even = 0
-            for i in range(len(valList)):
-                if i % 2 == 0:
-                    even += valList[i]
-                    sum2 += valList[i]
-                else:
-                    odd += valList[i]
-                    sum2 -= valList[i]
 
-                if sum2 < 0:
-                    return
-                
-                sum += valList[i]
+        if len(parenStr) == self.n * 2:
+            self.parenStrList.append(parenStr)
+            return
 
-                if sum == self.n and even == odd:
-                    print(valList)
-                    self.ans.append(self.makeParenStr(valList))
-                    #print(self.makeParenStr(valList))
-                    return
+        
+        if numOpen == numClose:
+            parenStr2 = parenStr[:]
+            parenStr2 += '('
+            self.func(parenStr2, numOpen + 1, numClose)
 
-        for i in range(1, n_new + 1):
-            newValList = valList[:]
-            newValList.append(i)
-            self.func(newValList, n_new - i)
+        elif numOpen > numClose and numOpen == self.n:
+            # backtracking
+            parenStr2 = parenStr[:]
+            parenStr2 += ')'
+            self.func(parenStr2, numOpen, numClose + 1)
+
+        elif numOpen > numClose and numOpen < self.n:
+            parenStr2 = parenStr[:]
+            parenStr2 += '('
+            self.func(parenStr2, numOpen + 1, numClose)
+
+            parenStr2 = parenStr[:]
+            parenStr2 += ')'
+            self.func(parenStr2, numOpen, numClose + 1)
 
 
-        return self.ans
+        return self.parenStrList
     
             
     def generateParenthesis(self, n):
@@ -58,8 +45,8 @@ class Solution:
         :rtype: List[str]
         """
         #newParenList = []
-        self.n = n*2
-        return self.func([], n*2)
+        self.n = n
+        return self.func("", 0, 0)
             
             
         
