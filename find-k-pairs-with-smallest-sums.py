@@ -22,29 +22,23 @@ class Solution:
         pairSumHeap = []
 
         # maxPairSum = -9999999999999999999999
-
-        if k > len(nums2):
-            l2 = len(nums2)
-        else:
-            l2 = k
-
-        for val1 in nums1:
+            
+        for val1 in nums1[:k]:
             # print("val1: " + str(val1))
-
-            for i2 in range(0, l2):
+            for val2 in nums2[:k]:
                 # print("nums2[i2]: " + str(nums2[i2]))
 
                 if len(kPairs) < k:
                     # print("IF")
-                    kPairs.append([val1, nums2[i2]])
-                    heapq.heappush(pairSumHeap, -1 * (val1 + nums2[i2]))
+                    kPairs.append([val1, val2])
+                    heapq.heappush(pairSumHeap, -1 * (val1 + val2))
 
 
-                elif val1 + nums2[i2] < (-1 * pairSumHeap[0]):
+                elif val1 + val2 < (-1 * pairSumHeap[0]):
                     # print("ELIF")
                     heapq.heappop(pairSumHeap)
-                    heapq.heappush(pairSumHeap, -1 * (val1 + nums2[i2]))
-                    kPairs.append([val1, nums2[i2]])
+                    heapq.heappush(pairSumHeap, -1 * (val1 + val2))
+                    kPairs.append([val1, val2])
 
         kPairs.sort(key=myFunc)
 
